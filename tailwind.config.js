@@ -10,7 +10,7 @@ export default {
         },
       },
       animation: {
-        'stimulus-in': 'stimulus-in 200ms ease-out',
+        'stimulus-in': 'stimulus-in 300ms ease-out',
       },
     },
   },
