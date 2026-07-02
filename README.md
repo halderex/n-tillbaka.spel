@@ -6,15 +6,16 @@ Play it at **https://halderex.github.io/n-tillbaka.spel/**
 
 ## How to play
 
-You're shown a sequence of items one at a time — letters, numbers, or emoji pictures, your choice. For each new item, ask yourself: *was this the same item shown N steps back?* If it was, tap **"This matches!"** before moving on. If not, just tap **Next**. There's no clock and no penalty for taking your time — look as long as you like before deciding.
+You're shown a sequence of items one at a time — letters, numbers, or emoji pictures, your choice. For each new item, ask yourself: *was this the same item shown N steps back?* Tap **"This matches!"** or **"No match"** — one tap both answers and moves you to the next item, so there's never more than a single click per item. There's no clock and no penalty for taking your time — look as long as you like before deciding. You can also tap **Cancel** at any point to abandon the round and return to the start screen.
 
 At the end of a round you get a friendly summary (matches caught, matches missed, extra flags) and a short history of your recent rounds, so you can casually track how you're doing over time without any pressure to "win."
 
 - **Levels**: choose 1-back through 4-back — how many steps back you need to remember.
 - **Stimulus types**: letters, numbers, or pictures (emoji).
 - **Language**: English or Svenska.
+- **Sound**: a soft click on every tap, with an on/off toggle if you'd rather play in silence.
 
-Your last-used level, stimulus type, language, and recent round history are remembered locally in your browser between visits — nothing is sent to a server.
+Your last-used level, stimulus type, language, sound preference, and recent round history are remembered locally in your browser between visits — nothing is sent to a server.
 
 ## Development
 

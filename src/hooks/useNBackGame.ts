@@ -42,22 +42,16 @@ export function useNBackGame() {
     });
   }, []);
 
-  const markMatch = useCallback(() => {
+  const respond = useCallback((isMatch: boolean) => {
     setState((prev) => {
       if (prev.phase !== 'playing') return prev;
-      const responses = [...prev.responses];
-      responses[prev.currentIndex] = true;
-      return { ...prev, responses };
-    });
-  }, []);
 
-  const advance = useCallback(() => {
-    setState((prev) => {
-      if (prev.phase !== 'playing') return prev;
+      const responses = [...prev.responses];
+      if (isMatch) responses[prev.currentIndex] = true;
 
       const nextIndex = prev.currentIndex + 1;
       if (nextIndex < prev.trials.length) {
-        return { ...prev, currentIndex: nextIndex };
+        return { ...prev, responses, currentIndex: nextIndex };
       }
 
       let correctMatches = 0;
@@ -66,7 +60,7 @@ export function useNBackGame() {
       let correctRejections = 0;
 
       prev.trials.forEach((trial, i) => {
-        const responded = Boolean(prev.responses[i]);
+        const responded = Boolean(responses[i]);
         if (trial.isMatch && responded) correctMatches++;
         else if (trial.isMatch && !responded) missedMatches++;
         else if (!trial.isMatch && responded) falseAlarms++;
@@ -84,7 +78,7 @@ export function useNBackGame() {
         correctRejections,
       };
 
-      return { ...prev, phase: 'summary', lastResult };
+      return { ...prev, responses, phase: 'summary', lastResult };
     });
   }, []);
 
@@ -92,5 +86,5 @@ export function useNBackGame() {
     setState((prev) => ({ ...initialState, level: prev.level, stimulusType: prev.stimulusType }));
   }, []);
 
-  return { state, startRound, markMatch, advance, reset };
+  return { state, startRound, respond, reset };
 }

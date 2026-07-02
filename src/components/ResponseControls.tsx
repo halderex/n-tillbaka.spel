@@ -2,41 +2,27 @@ import type { Translation } from '../lib/i18n';
 
 interface ResponseControlsProps {
   canMatch: boolean;
-  hasMarkedMatch: boolean;
-  isLastTrial: boolean;
-  onMatch: () => void;
-  onAdvance: () => void;
+  onRespond: (isMatch: boolean) => void;
   t: Translation;
 }
 
-export function ResponseControls({
-  canMatch,
-  hasMarkedMatch,
-  isLastTrial,
-  onMatch,
-  onAdvance,
-  t,
-}: ResponseControlsProps) {
+export function ResponseControls({ canMatch, onRespond, t }: ResponseControlsProps) {
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex gap-4">
       <button
         type="button"
-        onClick={onMatch}
+        onClick={() => onRespond(true)}
         disabled={!canMatch}
-        className={`rounded-full px-6 py-3 text-base font-medium transition active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 ${
-          hasMarkedMatch
-            ? 'bg-emerald-500 text-white'
-            : 'bg-white text-slate-600 hover:bg-emerald-100'
-        }`}
+        className="rounded-full bg-white px-6 py-3 text-base font-medium text-slate-600 transition active:scale-95 hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100"
       >
-        {hasMarkedMatch ? t.matchNotedButton : t.matchButton}
+        {t.matchButton}
       </button>
       <button
         type="button"
-        onClick={onAdvance}
-        className="rounded-full bg-sky-500 px-8 py-3 text-base font-medium text-white transition active:scale-95 hover:bg-sky-600"
+        onClick={() => onRespond(false)}
+        className="rounded-full bg-white px-6 py-3 text-base font-medium text-slate-600 transition active:scale-95 hover:bg-red-100"
       >
-        {isLastTrial ? t.finishButton : t.nextButton}
+        {t.noMatchButton}
       </button>
     </div>
   );

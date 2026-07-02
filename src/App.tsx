@@ -33,7 +33,7 @@ function App() {
   const t = TRANSLATIONS[language];
   const playClick = useClickSound(soundEnabled);
 
-  const { state, startRound, markMatch, advance, reset } = useNBackGame();
+  const { state, startRound, respond, reset } = useNBackGame();
 
   useEffect(() => {
     if (state.phase === 'summary' && state.lastResult) {
@@ -91,10 +91,7 @@ function App() {
           />
           <ResponseControls
             canMatch={state.currentIndex >= state.level}
-            hasMarkedMatch={Boolean(state.responses[state.currentIndex])}
-            isLastTrial={state.currentIndex === state.trials.length - 1}
-            onMatch={markMatch}
-            onAdvance={advance}
+            onRespond={respond}
             t={t}
           />
           <button

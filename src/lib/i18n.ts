@@ -19,9 +19,7 @@ export interface Translation {
   levelLabel: (level: number) => string;
   trialProgress: (current: number, total: number) => string;
   matchButton: string;
-  matchNotedButton: string;
-  nextButton: string;
-  finishButton: string;
+  noMatchButton: string;
   cancelButton: string;
   summaryTagline: string;
   matchesCaught: string;
@@ -47,9 +45,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     levelLabel: (level) => `Level ${level}`,
     trialProgress: (current, total) => `Trial ${current} of ${total}`,
     matchButton: 'This matches!',
-    matchNotedButton: 'Match noted ✓',
-    nextButton: 'Next',
-    finishButton: 'Finish round',
+    noMatchButton: 'No match',
     cancelButton: 'Cancel',
     summaryTagline: 'nice and steady — no rush',
     matchesCaught: 'Matches caught',
@@ -77,9 +73,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     levelLabel: (level) => `Nivå ${level}`,
     trialProgress: (current, total) => `Försök ${current} av ${total}`,
     matchButton: 'Det här matchar!',
-    matchNotedButton: 'Matchning sparad ✓',
-    nextButton: 'Nästa',
-    finishButton: 'Avsluta omgången',
+    noMatchButton: 'Matchar inte',
     cancelButton: 'Avbryt',
     summaryTagline: 'lugnt och stadigt — ta det i din takt',
     matchesCaught: 'Fångade matchningar',
