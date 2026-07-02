@@ -1,0 +1,92 @@
+import type { StimulusTypeId } from './types';
+
+export type Language = 'en' | 'sv';
+
+export const LANGUAGES: { id: Language; nativeLabel: string }[] = [
+  { id: 'en', nativeLabel: 'English' },
+  { id: 'sv', nativeLabel: 'Svenska' },
+];
+
+export interface Translation {
+  appTitle: string;
+  appSubtitle: string;
+  languagePrompt: string;
+  stepsBackPrompt: string;
+  whatToShowPrompt: string;
+  startButton: string;
+  levelLabel: (level: number) => string;
+  trialProgress: (current: number, total: number) => string;
+  matchButton: string;
+  matchNotedButton: string;
+  nextButton: string;
+  finishButton: string;
+  cancelButton: string;
+  summaryTagline: string;
+  matchesCaught: string;
+  matchesMissed: string;
+  extraFlags: string;
+  totalTrials: string;
+  playAgain: string;
+  changeLevel: string;
+  recentRounds: string;
+  stimulusLabels: Record<StimulusTypeId, string>;
+}
+
+export const TRANSLATIONS: Record<Language, Translation> = {
+  en: {
+    appTitle: 'n-tillbaka',
+    appSubtitle: 'a calm memory game, no rush',
+    languagePrompt: 'Language',
+    stepsBackPrompt: 'How many steps back?',
+    whatToShowPrompt: 'What should we show?',
+    startButton: 'Start',
+    levelLabel: (level) => `Level ${level}`,
+    trialProgress: (current, total) => `Trial ${current} of ${total}`,
+    matchButton: 'This matches!',
+    matchNotedButton: 'Match noted ✓',
+    nextButton: 'Next',
+    finishButton: 'Finish round',
+    cancelButton: 'Cancel',
+    summaryTagline: 'nice and steady — no rush',
+    matchesCaught: 'Matches caught',
+    matchesMissed: 'Matches missed',
+    extraFlags: 'Extra flags',
+    totalTrials: 'Total trials',
+    playAgain: 'Play again',
+    changeLevel: 'Change level',
+    recentRounds: 'Recent rounds',
+    stimulusLabels: {
+      letters: 'Letters',
+      numbers: 'Numbers',
+      emoji: 'Pictures',
+    },
+  },
+  sv: {
+    appTitle: 'n-tillbaka',
+    appSubtitle: 'ett lugnt minnesspel, utan stress',
+    languagePrompt: 'Språk',
+    stepsBackPrompt: 'Hur många steg tillbaka?',
+    whatToShowPrompt: 'Vad ska vi visa?',
+    startButton: 'Starta',
+    levelLabel: (level) => `Nivå ${level}`,
+    trialProgress: (current, total) => `Försök ${current} av ${total}`,
+    matchButton: 'Det här matchar!',
+    matchNotedButton: 'Matchning sparad ✓',
+    nextButton: 'Nästa',
+    finishButton: 'Avsluta omgången',
+    cancelButton: 'Avbryt',
+    summaryTagline: 'lugnt och stadigt — ta det i din takt',
+    matchesCaught: 'Fångade matchningar',
+    matchesMissed: 'Missade matchningar',
+    extraFlags: 'Extra markeringar',
+    totalTrials: 'Antal försök',
+    playAgain: 'Spela igen',
+    changeLevel: 'Byt nivå',
+    recentRounds: 'Senaste omgångarna',
+    stimulusLabels: {
+      letters: 'Bokstäver',
+      numbers: 'Siffror',
+      emoji: 'Bilder',
+    },
+  },
+};
