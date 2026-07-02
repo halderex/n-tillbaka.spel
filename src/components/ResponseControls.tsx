@@ -23,7 +23,7 @@ export function ResponseControls({
         type="button"
         onClick={onMatch}
         disabled={!canMatch}
-        className={`rounded-full px-6 py-3 text-base font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
+        className={`rounded-full px-6 py-3 text-base font-medium transition active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 ${
           hasMarkedMatch
             ? 'bg-emerald-500 text-white'
             : 'bg-white text-slate-600 hover:bg-emerald-100'
@@ -34,7 +34,7 @@ export function ResponseControls({
       <button
         type="button"
         onClick={onAdvance}
-        className="rounded-full bg-sky-500 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-sky-600"
+        className="rounded-full bg-sky-500 px-8 py-3 text-base font-medium text-white transition active:scale-95 hover:bg-sky-600"
       >
         {isLastTrial ? t.finishButton : t.nextButton}
       </button>

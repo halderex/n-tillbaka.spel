@@ -18,7 +18,7 @@ export function LevelSelect({ value, onChange, t }: LevelSelectProps) {
             key={level}
             type="button"
             onClick={() => onChange(level)}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${
+            className={`rounded-full px-5 py-2 text-sm font-medium transition active:scale-95 ${
               value === level
                 ? 'bg-sky-500 text-white'
                 : 'bg-white text-slate-600 hover:bg-sky-100'

@@ -18,7 +18,7 @@ export function StimulusTypeSelect({ value, onChange, t }: StimulusTypeSelectPro
             key={set.id}
             type="button"
             onClick={() => onChange(set.id)}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${
+            className={`rounded-full px-5 py-2 text-sm font-medium transition active:scale-95 ${
               value === set.id
                 ? 'bg-emerald-500 text-white'
                 : 'bg-white text-slate-600 hover:bg-emerald-100'

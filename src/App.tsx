@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
+import type { MouseEvent } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useNBackGame } from './hooks/useNBackGame';
+import { useClickSound } from './hooks/useClickSound';
 import { LEVELS } from './lib/levels';
 import type { Level } from './lib/levels';
 import { STIMULUS_SETS } from './lib/stimulusSets';
@@ -10,6 +12,7 @@ import type { Language } from './lib/i18n';
 import { LevelSelect } from './components/LevelSelect';
 import { StimulusTypeSelect } from './components/StimulusTypeSelect';
 import { LanguageSelect } from './components/LanguageSelect';
+import { SoundToggle } from './components/SoundToggle';
 import { StimulusDisplay } from './components/StimulusDisplay';
 import { ResponseControls } from './components/ResponseControls';
 import { RoundSummary } from './components/RoundSummary';
@@ -24,9 +27,11 @@ function App() {
     STIMULUS_SETS[0].id
   );
   const [language, setLanguage] = useLocalStorage<Language>('nback:language', DEFAULT_LANGUAGE);
+  const [soundEnabled, setSoundEnabled] = useLocalStorage<boolean>('nback:soundEnabled', true);
   const [history, setHistory] = useLocalStorage<RoundResult[]>('nback:history', []);
 
   const t = TRANSLATIONS[language];
+  const playClick = useClickSound(soundEnabled);
 
   const { state, startRound, markMatch, advance, reset } = useNBackGame();
 
@@ -43,8 +48,17 @@ function App() {
     startRound(lastLevel, lastStimulusType, set.items);
   };
 
+  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
+    if ((event.target as HTMLElement).closest('button')) {
+      playClick();
+    }
+  };
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-8 px-4 py-12">
+    <div
+      className="flex min-h-screen flex-col items-center justify-center gap-8 px-4 py-12"
+      onClickCapture={handleClickCapture}
+    >
       <header className="text-center">
         <h1 className="text-2xl font-semibold text-slate-700">{t.appTitle}</h1>
         <p className="text-sm text-slate-400">{t.appSubtitle}</p>
@@ -55,10 +69,11 @@ function App() {
           <LevelSelect value={lastLevel} onChange={setLastLevel} t={t} />
           <StimulusTypeSelect value={lastStimulusType} onChange={setLastStimulusType} t={t} />
           <LanguageSelect value={language} onChange={setLanguage} t={t} />
+          <SoundToggle value={soundEnabled} onChange={setSoundEnabled} t={t} />
           <button
             type="button"
             onClick={handleStart}
-            className="mt-2 rounded-full bg-sky-500 px-8 py-3 text-base font-medium text-white transition-colors hover:bg-sky-600"
+            className="mt-2 rounded-full bg-sky-500 px-8 py-3 text-base font-medium text-white transition active:scale-95 hover:bg-sky-600"
           >
             {t.startButton}
           </button>
@@ -85,7 +100,7 @@ function App() {
           <button
             type="button"
             onClick={reset}
-            className="text-sm text-slate-400 underline-offset-4 transition-colors hover:text-slate-600 hover:underline"
+            className="text-sm text-slate-400 underline-offset-4 transition active:scale-95 hover:text-slate-600 hover:underline"
           >
             {t.cancelButton}
           </button>

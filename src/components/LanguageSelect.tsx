@@ -17,7 +17,7 @@ export function LanguageSelect({ value, onChange, t }: LanguageSelectProps) {
             key={language.id}
             type="button"
             onClick={() => onChange(language.id)}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${
+            className={`rounded-full px-5 py-2 text-sm font-medium transition active:scale-95 ${
               value === language.id
                 ? 'bg-slate-500 text-white'
                 : 'bg-white text-slate-600 hover:bg-slate-100'

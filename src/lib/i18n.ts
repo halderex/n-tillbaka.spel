@@ -11,6 +11,8 @@ export interface Translation {
   appTitle: string;
   appSubtitle: string;
   languagePrompt: string;
+  soundOnLabel: string;
+  soundOffLabel: string;
   stepsBackPrompt: string;
   whatToShowPrompt: string;
   startButton: string;
@@ -37,6 +39,8 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     appTitle: 'n-tillbaka',
     appSubtitle: 'a calm memory game, no rush',
     languagePrompt: 'Language',
+    soundOnLabel: '🔊 Sound on',
+    soundOffLabel: '🔇 Sound off',
     stepsBackPrompt: 'How many steps back?',
     whatToShowPrompt: 'What should we show?',
     startButton: 'Start',
@@ -65,6 +69,8 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     appTitle: 'n-tillbaka',
     appSubtitle: 'ett lugnt minnesspel, utan stress',
     languagePrompt: 'Språk',
+    soundOnLabel: '🔊 Ljud på',
+    soundOffLabel: '🔇 Ljud av',
     stepsBackPrompt: 'Hur många steg tillbaka?',
     whatToShowPrompt: 'Vad ska vi visa?',
     startButton: 'Starta',

@@ -49,14 +49,14 @@ export function RoundSummary({ result, history, onPlayAgain, onChangeLevel, t }:
         <button
           type="button"
           onClick={onPlayAgain}
-          className="rounded-full bg-sky-500 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-sky-600"
+          className="rounded-full bg-sky-500 px-6 py-3 text-base font-medium text-white transition active:scale-95 hover:bg-sky-600"
         >
           {t.playAgain}
         </button>
         <button
           type="button"
           onClick={onChangeLevel}
-          className="rounded-full bg-white px-6 py-3 text-base font-medium text-slate-600 transition-colors hover:bg-slate-100"
+          className="rounded-full bg-white px-6 py-3 text-base font-medium text-slate-600 transition active:scale-95 hover:bg-slate-100"
         >
           {t.changeLevel}
         </button>
