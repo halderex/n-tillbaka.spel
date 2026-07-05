@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
@@ -14,5 +16,11 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Scope `hover:` to devices that actually support hovering, so touchscreens
+    // don't get a "stuck" hover style after tapping a button (no mouseleave to clear it).
+    plugin(({ addVariant }) => {
+      addVariant('hover', '@media (hover: hover) { &:hover }');
+    }),
+  ],
 };
