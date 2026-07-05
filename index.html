@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>n-tillbaka.spel — a calm n-back game</title>
   </head>
-  <body>
+  <!-- Empty ontouchstart enables :active button styles in iOS Safari, which
+       otherwise ignores :active unless an element/ancestor has a touch handler. -->
+  <body ontouchstart="">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
