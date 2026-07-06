@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { generateSequence } from '../lib/sequenceGenerator';
 import type { RoundResult, StimulusTypeId, Trial } from '../lib/types';
-import { ROUND_LENGTH } from '../lib/levels';
 import type { Level } from '../lib/levels';
 
 type GamePhase = 'select' | 'playing' | 'summary';
@@ -29,18 +28,21 @@ const initialState: GameState = {
 export function useNBackGame() {
   const [state, setState] = useState<GameState>(initialState);
 
-  const startRound = useCallback((level: Level, stimulusType: StimulusTypeId, items: string[]) => {
-    const trials = generateSequence(items, level, ROUND_LENGTH);
-    setState({
-      phase: 'playing',
-      level,
-      stimulusType,
-      trials,
-      currentIndex: 0,
-      responses: [],
-      lastResult: null,
-    });
-  }, []);
+  const startRound = useCallback(
+    (level: Level, stimulusType: StimulusTypeId, items: string[], roundLength: number) => {
+      const trials = generateSequence(items, level, roundLength);
+      setState({
+        phase: 'playing',
+        level,
+        stimulusType,
+        trials,
+        currentIndex: 0,
+        responses: [],
+        lastResult: null,
+      });
+    },
+    []
+  );
 
   const respond = useCallback((isMatch: boolean) => {
     setState((prev) => {

@@ -3,14 +3,16 @@ import type { MouseEvent } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useNBackGame } from './hooks/useNBackGame';
 import { useClickSound } from './hooks/useClickSound';
-import { LEVELS } from './lib/levels';
-import type { Level } from './lib/levels';
+import { useTadaSound } from './hooks/useTadaSound';
+import { LEVELS, DEFAULT_ROUND_LENGTH } from './lib/levels';
+import type { Level, RoundLength } from './lib/levels';
 import { STIMULUS_SETS } from './lib/stimulusSets';
 import type { RoundResult, StimulusTypeId } from './lib/types';
 import { TRANSLATIONS } from './lib/i18n';
 import type { Language } from './lib/i18n';
 import { LevelSelect } from './components/LevelSelect';
 import { StimulusTypeSelect } from './components/StimulusTypeSelect';
+import { RoundLengthSelect } from './components/RoundLengthSelect';
 import { LanguageSelect } from './components/LanguageSelect';
 import { SoundToggle } from './components/SoundToggle';
 import { StimulusDisplay } from './components/StimulusDisplay';
@@ -26,26 +28,35 @@ function App() {
     'nback:lastStimulusType',
     STIMULUS_SETS[0].id
   );
+  const [roundLength, setRoundLength] = useLocalStorage<RoundLength>(
+    'nback:roundLength',
+    DEFAULT_ROUND_LENGTH
+  );
   const [language, setLanguage] = useLocalStorage<Language>('nback:language', DEFAULT_LANGUAGE);
   const [soundEnabled, setSoundEnabled] = useLocalStorage<boolean>('nback:soundEnabled', true);
   const [history, setHistory] = useLocalStorage<RoundResult[]>('nback:history', []);
 
+  // Guard against a level persisted before level 4 was dropped (or any out-of-range value).
+  const level = (LEVELS as readonly number[]).includes(lastLevel) ? lastLevel : LEVELS[0];
+
   const t = TRANSLATIONS[language];
   const playClick = useClickSound(soundEnabled);
+  const playTada = useTadaSound(soundEnabled);
 
   const { state, startRound, respond, reset } = useNBackGame();
 
   useEffect(() => {
     if (state.phase === 'summary' && state.lastResult) {
       setHistory([...history, state.lastResult].slice(-HISTORY_LIMIT));
+      playTada();
     }
-    // history intentionally omitted from deps — only append once when a round completes
+    // history/playTada intentionally omitted — only fire once when a round completes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase, state.lastResult]);
 
   const handleStart = () => {
     const set = STIMULUS_SETS.find((s) => s.id === lastStimulusType) ?? STIMULUS_SETS[0];
-    startRound(lastLevel, lastStimulusType, set.items);
+    startRound(level, lastStimulusType, set.items, roundLength);
   };
 
   const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
@@ -66,8 +77,9 @@ function App() {
 
       {state.phase === 'select' && (
         <div className="flex w-full max-w-md flex-col gap-8 rounded-3xl bg-white/60 p-8">
-          <LevelSelect value={lastLevel} onChange={setLastLevel} t={t} />
+          <LevelSelect value={level} onChange={setLastLevel} t={t} />
           <StimulusTypeSelect value={lastStimulusType} onChange={setLastStimulusType} t={t} />
+          <RoundLengthSelect value={roundLength} onChange={setRoundLength} t={t} />
           <LanguageSelect value={language} onChange={setLanguage} t={t} />
           <SoundToggle value={soundEnabled} onChange={setSoundEnabled} t={t} />
           <button

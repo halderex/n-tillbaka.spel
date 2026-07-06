@@ -15,6 +15,7 @@ export interface Translation {
   soundOffLabel: string;
   stepsBackPrompt: string;
   whatToShowPrompt: string;
+  roundLengthPrompt: string;
   startButton: string;
   levelLabel: (level: number) => string;
   trialProgress: (current: number, total: number) => string;
@@ -41,6 +42,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     soundOffLabel: '🔇 Sound off',
     stepsBackPrompt: 'How many steps back?',
     whatToShowPrompt: 'What should we show?',
+    roundLengthPrompt: 'How many items per round?',
     startButton: 'Start',
     levelLabel: (level) => `Level ${level}`,
     trialProgress: (current, total) => `Trial ${current} of ${total}`,
@@ -69,6 +71,7 @@ export const TRANSLATIONS: Record<Language, Translation> = {
     soundOffLabel: '🔇 Ljud av',
     stepsBackPrompt: 'Hur många steg tillbaka?',
     whatToShowPrompt: 'Vad ska vi visa?',
+    roundLengthPrompt: 'Hur många objekt per omgång?',
     startButton: 'Starta',
     levelLabel: (level) => `Nivå ${level}`,
     trialProgress: (current, total) => `Försök ${current} av ${total}`,
