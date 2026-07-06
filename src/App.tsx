@@ -22,6 +22,11 @@ import { RoundSummary } from './components/RoundSummary';
 const HISTORY_LIMIT = 50;
 const DEFAULT_LANGUAGE: Language = navigator.language.toLowerCase().startsWith('sv') ? 'sv' : 'en';
 
+// Language selection is currently hidden and the app is forced to Swedish.
+// Flip this to true to restore the in-app language picker; all the i18n
+// plumbing (LanguageSelect, English strings, persisted preference) is kept intact.
+const LANGUAGE_SELECT_ENABLED = false;
+
 function App() {
   const [lastLevel, setLastLevel] = useLocalStorage<Level>('nback:lastLevel', LEVELS[0]);
   const [lastStimulusType, setLastStimulusType] = useLocalStorage<StimulusTypeId>(
@@ -32,9 +37,12 @@ function App() {
     'nback:roundLength',
     DEFAULT_ROUND_LENGTH
   );
-  const [language, setLanguage] = useLocalStorage<Language>('nback:language', DEFAULT_LANGUAGE);
+  const [storedLanguage, setLanguage] = useLocalStorage<Language>('nback:language', DEFAULT_LANGUAGE);
   const [soundEnabled, setSoundEnabled] = useLocalStorage<boolean>('nback:soundEnabled', true);
   const [history, setHistory] = useLocalStorage<RoundResult[]>('nback:history', []);
+
+  // While the picker is hidden, force Swedish regardless of any persisted preference.
+  const language: Language = LANGUAGE_SELECT_ENABLED ? storedLanguage : 'sv';
 
   // Guard against a level persisted before level 4 was dropped (or any out-of-range value).
   const level = (LEVELS as readonly number[]).includes(lastLevel) ? lastLevel : LEVELS[0];
@@ -80,7 +88,7 @@ function App() {
           <LevelSelect value={level} onChange={setLastLevel} t={t} />
           <StimulusTypeSelect value={lastStimulusType} onChange={setLastStimulusType} t={t} />
           <RoundLengthSelect value={roundLength} onChange={setRoundLength} t={t} />
-          <LanguageSelect value={language} onChange={setLanguage} t={t} />
+          {LANGUAGE_SELECT_ENABLED && <LanguageSelect value={language} onChange={setLanguage} t={t} />}
           <SoundToggle value={soundEnabled} onChange={setSoundEnabled} t={t} />
           <button
             type="button"
